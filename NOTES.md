@@ -1,6 +1,6 @@
 RECIPE
-- has_many :recipes
-- belongs_to :user
+- has_many :reviews
+- belongs_to :user (:user_id)
 (:title, :img, :cuisine, :ingredients, :directions :cook_time)
 
 REVIEW
@@ -11,5 +11,5 @@ REVIEW
 
 USER
 - has_many :recipes
-- has_many recipes, through: :reviews (get all the reviews and the recipes that they reviewed)
+- has_many reviews, through: :recipes (get all the reviews and the recipes that they reviewed)
 (:username, :email, :passsword)

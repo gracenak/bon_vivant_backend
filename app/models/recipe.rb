@@ -1,5 +1,4 @@
 class Recipe < ApplicationRecord
-    has_many :recipes
-    belongs_ to :user
-    validates :title, presence: true
+    has_many :reviews
+    belongs_to :user
 end

@@ -2,13 +2,13 @@ class Api::V1::RecipesController < ApplicationController
 
     def index
         recipes = Recipe.all
-        render json: recipes
+        render json: RecipeSerializer.new(recipes)
     end
 
     def create
         recipe = Recipe.new(vision_params)
         if recipe.save
-            render json: recipe
+            render json: RecipeSerializer.new(recipe), status: :accepted
         else
             render json: {error: "Recipe did not save"}
         end

@@ -1,21 +1,21 @@
 class Api::V1::ReviewsController < ApplicationController
 
-    before_action: set_recipe
+    before_action :set_recipe
 
     def index
-        review = recipe.reviews
-        render json: review
+        review = @recipe.reviews
+        render json: ReviewSerializer.new(review)
     end
 
     def show
         review = Review.find_by(id: params[:id])
-        render json: review
+        render json: ReviewSerializer.new(review)
     end
     
     def create
         review = recipe.reviews.build(review_params)
         if review.save
-            render json: review
+            render json: ReviewSerializer.new(review)
         else
             render json: {error: "Review did not save."}
         end
@@ -30,7 +30,7 @@ class Api::V1::ReviewsController < ApplicationController
     private
 
     def set_recipe
-        recipe = Recipe.find(params[:recipe_id])
+        @recipe = Recipe.find(params[:recipe_id])
     end
 
     def review_params

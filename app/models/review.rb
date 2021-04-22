@@ -3,4 +3,7 @@ class Review < ApplicationRecord
     belongs_to :user
 
     validates :comment, :rating, presence: true
+
+    def avg_rating
+    end
 end

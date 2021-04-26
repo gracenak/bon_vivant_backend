@@ -2,14 +2,14 @@ class Api::V1::RecipesController < ApplicationController
 
     def index
         recipes = Recipe.all
-        render json: RecipeSerializer.new(recipes)
+        render json: recipes
     end
 
     def create
         binding.pry
         recipe = Recipe.new(recipe_params)
         if recipe.save
-            render json: RecipeSerializer.new(recipe), status: :accepted
+            render json: recipe, status: :accepted
         else
             render json: {error: "Recipe did not save"}
         end

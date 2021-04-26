@@ -13,9 +13,10 @@ class Api::V1::ReviewsController < ApplicationController
     end
     
     def create
-        review = recipe.reviews.build(review_params)
-        if review.save
-            render json: ReviewSerializer.new(review)
+        @review = @recipe.reviews.new(review_params)
+        if @review.save
+            # render json: ReviewSerializer.new(@review)
+            render json: @recipe
         else
             render json: {error: "Review did not save."}
         end

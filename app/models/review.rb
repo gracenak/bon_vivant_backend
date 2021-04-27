@@ -4,6 +4,5 @@ class Review < ApplicationRecord
 
     validates :comment, :rating, presence: true
 
-    def avg_rating
-    end
+
 end

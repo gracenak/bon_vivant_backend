@@ -25,7 +25,6 @@ class Api::V1::ReviewsController < ApplicationController
     end
 
     def destroy
-        binding.pry
         @review = Review.find_by(id: params[:id])
         @recipe = Recipe.find(@review.recipe_id)
         @review.destroy

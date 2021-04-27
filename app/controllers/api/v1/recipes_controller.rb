@@ -20,6 +20,13 @@ class Api::V1::RecipesController < ApplicationController
         render json: @recipe
     end
 
+    def update
+        binding.pry
+        @recipe = Recipe.find(params[:id])
+        @recipe.update(recipe_params)
+        render json: @recipe
+    end
+
     def destroy
         @recipe = Recipe.find_by(id: params[:id])
         @recipe.destroy

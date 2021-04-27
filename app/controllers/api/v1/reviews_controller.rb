@@ -3,19 +3,21 @@ class Api::V1::ReviewsController < ApplicationController
     before_action :set_recipe
 
     def index
-        review = @recipe.reviews
-        render json: review
+        @reviews = Review.all
+        render json: @reviews
+        # review = @recipe.reviews
+        # render json: review
     end
 
     def show
-        review = Review.find_by(id: params[:id])
-        render json: review
+        @review = Review.find_by(id: params[:id])
+        render json: @review
     end
     
     def create
         @review = @recipe.reviews.new(review_params)
+        binding.pry
         if @review.save
-            # render json: ReviewSerializer.new(@review)
             render json: @recipe
         else
             render json: {error: "Review did not save."}
@@ -23,9 +25,11 @@ class Api::V1::ReviewsController < ApplicationController
     end
 
     def destroy
-        review = Review.find_by(id: params[:id])
-        review.destroy
-        render json: destroy
+        binding.pry
+        @review = Review.find_by(id: params[:id])
+        @recipe = Recipe.find(@review.recipe_id)
+        @review.destroy
+        render json: @recipe
     end
 
     private

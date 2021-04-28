@@ -1,4 +1,5 @@
 class Api::V1::ReviewsController < ApplicationController
+    # protect_from_forgery with: :null_session
 
     before_action :set_recipe
 
@@ -21,14 +22,18 @@ class Api::V1::ReviewsController < ApplicationController
             render json: @recipe
         else
             render json: {error: "Review did not save."}
+            # render json: {error: @review.errors.messages}, status: 422 
         end
     end
 
     def destroy
         @review = Review.find_by(id: params[:id])
         @recipe = Recipe.find(@review.recipe_id)
-        @review.destroy
-        render json: @recipe
+        if @review.destroy
+            render json: @recipe
+        else
+            render json: {error: @review.errors.messages}, status: 422 
+        end
     end
 
     private

@@ -1,4 +1,5 @@
 class Api::V1::RecipesController < ApplicationController
+    # protect_from_forgery with: :null_session
 
     def index
         @recipes = Recipe.all
@@ -6,30 +7,38 @@ class Api::V1::RecipesController < ApplicationController
     end
 
     def create
-        binding.pry
         @recipe = Recipe.new(recipe_params)
         if @recipe.save
             render json: @recipe
         else
             render json: {error: "Recipe did not save"}
+            # render json: {error: @recipe.error.messages}, status: 422
         end
     end
 
     def show
-        @recipe = Recipe.find_by(id: params[:id])
+        @recipe = Recipe.find_by(slug: params[:slug])
         render json: @recipe
     end
 
     def update
         binding.pry
         @recipe = Recipe.find(params[:id])
-        @recipe.update(recipe_params)
-        render json: @recipe
+        if @recipe.update(recipe_params)
+            render json: @recipe
+        else
+            render json: {error: "Recipe did not update"}
+            # render json: {error: @recipe.error.messages}, status: 422
+        end
     end
 
     def destroy
         @recipe = Recipe.find_by(id: params[:id])
-        @recipe.destroy
+        if @recipe.destroy
+            head :no_content
+        else
+            render json: {error: @recipe.error.messages}, status: 422
+        end
     end
 
     private

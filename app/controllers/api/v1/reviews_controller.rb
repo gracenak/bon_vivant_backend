@@ -1,7 +1,9 @@
+require 'pry'
 class Api::V1::ReviewsController < ApplicationController
     # protect_from_forgery with: :null_session
-
     before_action :set_recipe
+
+    skip_before_action :set_recipe, only: [:destroy]
 
     def index
         @reviews = Review.all
@@ -17,7 +19,6 @@ class Api::V1::ReviewsController < ApplicationController
     
     def create
         @review = @recipe.reviews.new(review_params)
-        binding.pry
         if @review.save
             render json: @recipe
         else
@@ -27,10 +28,12 @@ class Api::V1::ReviewsController < ApplicationController
     end
 
     def destroy
+        binding.pry
         @review = Review.find_by(id: params[:id])
-        @recipe = Recipe.find(@review.recipe_id)
+       
+        recipe = @review.recipe
         if @review.destroy
-            render json: @recipe
+            render json: recipe
         else
             render json: {error: @review.errors.messages}, status: 422 
         end
@@ -43,6 +46,6 @@ class Api::V1::ReviewsController < ApplicationController
     end
 
     def review_params
-        params.require(:review).permit(:comment, :rating, :user_id, :recipe_id)
+        params.require(:review).permit(:comment, :rating, :username, :recipe_id)
     end
 end

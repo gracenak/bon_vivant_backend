@@ -3,10 +3,10 @@ class CreateRecipes < ActiveRecord::Migration[6.0]
     create_table :recipes do |t|
       t.string :title
       t.string :img
+      t.string :cook_time
       t.string :ingredients
       t.string :directions
-      t.string :cook_time
-      t.references :user, null: false, foreign_key: true
+      t.string :slug
 
       t.timestamps
     end

@@ -8,8 +8,6 @@ class Api::V1::ReviewsController < ApplicationController
     def index
         @reviews = Review.all
         render json: @reviews
-        # review = @recipe.reviews
-        # render json: review
     end
 
     def show

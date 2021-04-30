@@ -1,6 +1,8 @@
 class Api::V1::RecipesController < ApplicationController
     # protect_from_forgery with: :null_session
 
+    # before_action :set_recipe_for_edit, only: [:update]
+
     def index
         @recipes = Recipe.all
         render json: @recipes
@@ -16,14 +18,15 @@ class Api::V1::RecipesController < ApplicationController
         end
     end
 
-    def show
-        @recipe = Recipe.find_by(slug: params[:slug])
-        render json: @recipe
-    end
+    # def show
+    #     @recipe = Recipe.find_by(slug: params[:slug])
+    #     render json: @recipe
+    # end
 
     def update
         binding.pry
-        @recipe = Recipe.find(params[:id])
+        @recipe = Recipe.find_by(id: params[:id])
+        binding.pry
         if @recipe.update(recipe_params)
             render json: @recipe
         else
@@ -42,6 +45,10 @@ class Api::V1::RecipesController < ApplicationController
     end
 
     private
+
+    # def set_recipe_for_edit
+    #     @recipe = Recipe.find_by(id: params[:id])
+    # end
 
 
     def recipe_params

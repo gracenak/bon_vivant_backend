@@ -11,8 +11,7 @@ class Api::V1::RecipesController < ApplicationController
         if @recipe.save
             render json: @recipe
         else
-            render json: {error: "Recipe did not save"}
-            # render json: {error: @recipe.error.messages}, status: 422
+            render json: {error: @recipe.error.messages}, status: 422
         end
     end
 
@@ -22,14 +21,11 @@ class Api::V1::RecipesController < ApplicationController
     # end
 
     def update
-        binding.pry
         @recipe = Recipe.find_by(id: params[:id])
-        binding.pry
         if @recipe.update(ingredients: params[:recipe][:ingredients], directions: params[:recipe][:directions], cook_time: params[:recipe][:cook_time], img: params[:recipe][:img])
             render json: @recipe
         else
-            render json: {error: "Recipe did not update"}
-            # render json: {error: @recipe.error.messages}, status: 422
+            render json: {error: @recipe.error.messages}, status: 422
         end
     end
 

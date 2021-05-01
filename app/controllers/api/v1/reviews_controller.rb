@@ -1,4 +1,3 @@
-require 'pry'
 class Api::V1::ReviewsController < ApplicationController
     # protect_from_forgery with: :null_session
     before_action :set_recipe
@@ -20,13 +19,11 @@ class Api::V1::ReviewsController < ApplicationController
         if @review.save
             render json: @recipe
         else
-            render json: {error: "Review did not save."}
-            # render json: {error: @review.errors.messages}, status: 422 
+            render json: {error: @review.errors.messages}, status: 422 
         end
     end
 
     def destroy
-        binding.pry
         @review = Review.find_by(id: params[:id])
        
         recipe = @review.recipe

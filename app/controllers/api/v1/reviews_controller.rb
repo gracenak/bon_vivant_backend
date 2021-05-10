@@ -2,7 +2,7 @@ class Api::V1::ReviewsController < ApplicationController
     # protect_from_forgery with: :null_session
     before_action :set_recipe
 
-    skip_before_action :set_recipe, only: [:destroy]
+    # skip_before_action :set_recipe, only: [:destroy]
 
     def index
         @reviews = Review.all
@@ -25,10 +25,10 @@ class Api::V1::ReviewsController < ApplicationController
 
     def destroy
         @review = Review.find_by(id: params[:id])
-       
-        recipe = @review.recipe
+        @recipe = Recipe.find(@review.recipe_id)
+        # @recipe = @review.recipe
         if @review.destroy
-            render json: recipe
+            render json: @recipe
         else
             render json: {error: @review.errors.messages}, status: 422 
         end
@@ -37,7 +37,7 @@ class Api::V1::ReviewsController < ApplicationController
     private
 
     def set_recipe
-        @recipe = Recipe.find(params[:recipe_id])
+        @recipe = Recipe.find(params[:recipe_slug])
     end
 
     def review_params

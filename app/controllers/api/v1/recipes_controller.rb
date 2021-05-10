@@ -23,6 +23,7 @@ class Api::V1::RecipesController < ApplicationController
     def update
         @recipe = Recipe.find_by(id: params[:id])
         if @recipe.update(ingredients: params[:recipe][:ingredients], directions: params[:recipe][:directions], cook_time: params[:recipe][:cook_time], img: params[:recipe][:img])
+            @recipe.save
             render json: @recipe
         else
             render json: {error: @recipe.error.messages}, status: 422

@@ -29,7 +29,7 @@ review4 = Review.create(comment: "Beautiful but was okay", rating: 4, username: 
 
 cookie = Recipe.create(title: "Chocolate Chip Cookies", img: "https://joyfoodsunshine.com/wp-content/uploads/2016/01/best-chocolate-chip-cookies-recipe-ever-no-chilling-1-e1549147195343.jpg", 
     ingredients: 
-    "1 cup salted butter* softened
+    "1 cup salted butter* softened,
     1 cup white (granulated) sugar,
     1 cup light brown sugar packed,
     2 tsp pure vanilla extract,
